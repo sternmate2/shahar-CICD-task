@@ -39,4 +39,4 @@ jobs:
     
     - name: Terraform Plan
       id: plan
-      run: terraform plan -out=planFileGit -var-file=terraform-staging.tfvars -lock=false
+      run: terraform plan -out=planFileGit -var-file staging.tfvars -lock=false
