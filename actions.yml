@@ -1,0 +1,43 @@
+name: 'Terraform'
+
+on:
+  push:
+    branches:
+    - main
+  # pull_request:
+
+jobs:
+  terraform:
+    name: 'Terraform'
+    runs-on: ubuntu-latest
+    env:
+      ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.AZURE_AD_CLIENT_SECRET }}
+      ARM_TENANT_ID: ${{ secrets.AZURE_TENANTID }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTIONID }}
+
+    environment: staging
+    
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+    # Checkout the repository to the GitHub Actions runner
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - uses: hashicorp/setup-terraform@v1
+
+    - name: Terraform Init
+      id: init
+      run: terraform init
+    
+    - name: Terraform Validate
+      id: validate
+      run: terraform validate
+    
+    - name: Terraform Plan
+      id: plan
+      run: terraform plan -var-file dev.tfvars
