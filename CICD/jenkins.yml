@@ -1,14 +1,12 @@
-name: 'terraform'
+name: 'jenkins'
 
 on:
   push:
     branches:
-     - Actions 
-  pull_request:
-    branches:
-     - main
+     - Actions
     paths:
-     - Iac/**
+      - Iac/** 
+  pull_request:
     types: [closed]
       
 jobs:
