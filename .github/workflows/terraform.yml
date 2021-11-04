@@ -47,7 +47,7 @@ jobs:
       run: terraform plan -out=planFileGit -var-file staging.tfvars -lock=false
 
     - name: Terraform Plan
-      id: plan
+      id: apply
       run: terraform apply -var-file staging.tfvars -auto-approve
 
 
