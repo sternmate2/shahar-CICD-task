@@ -3,7 +3,7 @@ name: 'terraform'
 on:
   push:
     branches:
-     - Action
+     - Actions
     # paths:
     #  - Iac/** 
   pull_request:
