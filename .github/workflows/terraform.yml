@@ -4,11 +4,11 @@ on:
   push:
     branches:
      - main
-    # paths:
-    #   - Iac/** 
+    paths:
+     - Iac/** 
   pull_request:
     branches:
-     - main
+     - Action
 jobs:
   terraform:
     name: 'Terraform'
