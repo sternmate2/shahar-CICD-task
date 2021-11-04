@@ -8,6 +8,7 @@ on:
      - Iac/** 
   pull_request:
     branches:
+     - main
      - Action
 jobs:
   terraform:
