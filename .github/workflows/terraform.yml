@@ -45,3 +45,7 @@ jobs:
     - name: Terraform Plan
       id: plan
       run: terraform plan -out=planFileGit -var-file staging.tfvars -lock=false
+
+    - name: pull request
+      if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
+      run: terraform apply -var-file staging.tfvars -auto-approve
