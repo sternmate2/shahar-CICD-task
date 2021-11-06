@@ -1,60 +1,60 @@
 pipeline {
     agent any
-    parameters {
-        string(name: 'ENV', defaultValue: 'prod', description: 'Environemnt')
-    }
+    // parameters {
+    //     string(name: 'ENV', defaultValue: 'prod', description: 'Environemnt')
+    // }
 
-    environment {
-        ARM_USE_MSI = 'true'
-        ARM_SUBSCRIPTION_ID = '0df0b217-e303-4931-bcbf-af4fe070d1ac'
-        ARM_TENANT_ID = '812aea3a-56f9-4dcb-81f3-83e61357076e'
-    }
+    // environment {
+    //     ARM_USE_MSI = 'true'
+    //     ARM_SUBSCRIPTION_ID = '0df0b217-e303-4931-bcbf-af4fe070d1ac'
+    //     ARM_TENANT_ID = '812aea3a-56f9-4dcb-81f3-83e61357076e'
+    // }
 
     stages {
-        stage('Init') {
+        stage('git clone') {
             steps {
-                sh "terraform init"
+                sh "git clone git@github.com:eToro-bootcamp/BootcapProject.git"
             }
-        }
-        stage('Validate') {
-            steps {
-                sh "terraform validate"
-            }
-        }
-        stage('Plan') {
-            steps {
-                sh """ terraform plan --var-file ${params.ENV}.tfvars -out=file.txt """
-            }
-        }
+        // }
+        // stage('Validate') {
+        //     steps {
+        //         sh "terraform validate"
+        //     }
+        // }
+        // stage('Plan') {
+        //     steps {
+        //         sh """ terraform plan --var-file ${params.ENV}.tfvars -out=file.txt """
+        //     }
+        // }
     
-        stage('Plan Approval') {
-            steps {
-                script {
-                    if (params.ENV == "prod") {
-                        input "Deploy to Production"
-                    } else {
-                        echo 'Dploy to Staging'
-                    }
-                }
-            }
+        // stage('Plan Approval') {
+        //     steps {
+        //         script {
+        //             if (params.ENV == "prod") {
+        //                 input "Deploy to Production"
+        //             } else {
+        //                 echo 'Dploy to Staging'
+        //             }
+        //         }
+        //     }
         }
 
-        stage('apply') {
-            steps {
-                sh """ terraform apply --var-file ${params.ENV}.tfvars -auto-approve """
-            }
-        }
+        // stage('apply') {
+        //     steps {
+        //         sh """ terraform apply --var-file ${params.ENV}.tfvars -auto-approve """
+        //     }
+        // }
 
-        stage('Notify') {
-            steps {
-                googlechatnotification (
-                    url: "https://chat.googleapis.com/v1/spaces/AAAA2NbUb4k/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=Dj2G09mcUzr7_EHuGs2OY0b_tyllq1tH4SGezzJvB8g%3D",
-                    message: 'I DID IT!!!!!',
-                    sameThreadNotification: true,
-                    suppressInfoLoggers: true 
-                )   
-            }
-        }
+        // stage('Notify') {
+        //     steps {
+        //         googlechatnotification (
+        //             url: "https://chat.googleapis.com/v1/spaces/AAAA2NbUb4k/messages?key=AIzaSyDdI0hCZtE6vySjMm-WEfRq3CPzqKqqsHI&token=Dj2G09mcUzr7_EHuGs2OY0b_tyllq1tH4SGezzJvB8g%3D",
+        //             message: 'I DID IT!!!!!',
+        //             sameThreadNotification: true,
+        //             suppressInfoLoggers: true 
+        //         )   
+        //     }
+        // }
 
 
     }
