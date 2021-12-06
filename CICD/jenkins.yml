@@ -3,15 +3,17 @@ name: 'jenkins'
 on:
   push:
     branches:
-     - Actions
+     - jenkins
     paths:
-      - Iac/** 
+      - CICD/** 
   pull_request:
-    types: [closed]
-      
+    branches:
+     - jenkins
+    paths:
+      - CICD/**
 jobs:
   terraform:
-    name: 'Terraform'
+    name: 'jenkins'
     runs-on: ubuntu-latest
     env:
       ARM_CLIENT_ID: ${{ secrets.AZURE_AD_CLIENT_ID }}
